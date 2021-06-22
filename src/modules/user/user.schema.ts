@@ -1,5 +1,6 @@
 import { Document, Schema } from "mongoose";
 
+// interface
 export interface UserModelInterface extends Document {
 	email: string;
 	password: string;
@@ -13,7 +14,8 @@ export interface UserModelInterface extends Document {
 	address: string;
 }
 
-const userSchema = new Schema(
+// schema
+const userSchema = new Schema<UserModelInterface>(
 	{
 		firstName: Schema.Types.String,
 		lastName: Schema.Types.String,
@@ -42,5 +44,14 @@ const userSchema = new Schema(
 		},
 	}
 );
+
+// hooks
+userSchema.pre("save", async function (next) {
+	if (this.isNew) {
+		const recExists = await this.collection.findOne({ email: this.email });
+		if (recExists) throw new Error("User already exists.");
+	}
+	next();
+});
 
 export { userSchema };

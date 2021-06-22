@@ -3,6 +3,7 @@ import Container from "typedi";
 import { UserService } from "./user.service";
 import { Body, Get, JsonController, Post } from "routing-controllers";
 import { UserModelInterface } from "./user.schema";
+import { LoginType } from "./user.params";
 
 @JsonController("/user")
 export class UserController {
@@ -10,8 +11,7 @@ export class UserController {
 
 	@Get()
 	async get() {
-		const records = await this.service.get();
-		return records;
+		return this.service.get();
 	}
 
 	@Post("/register")
@@ -21,7 +21,7 @@ export class UserController {
 	}
 
 	@Post("/login")
-	async login(@Body() userData: { email: string; password: string }) {
+	async login(@Body({ validate: true }) userData: LoginType) {
 		const success = await this.service.login(
 			userData.email,
 			userData.password

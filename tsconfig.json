@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "allowJs": false,
+        "target": "ES2020",
+        "outDir": "./build",
+        // "baseUrl": "./src",
+        "module": "CommonJS",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "moduleResolution": "Node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+    },
+    "include": ["src"],
+    "exclude": ["node_modules"]
+}

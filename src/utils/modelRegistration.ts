@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
+import type { SchemaDefinition } from "mongoose";
 
-type ModelData = [string, Schema];
+type ModelData = [string, any];
 export const registerModels = (...modelData: ModelData[]) => {
-	for (let each of modelData) model(...each);
+	for (let [name, schema] of modelData) model(name, schema as Schema);
 };
